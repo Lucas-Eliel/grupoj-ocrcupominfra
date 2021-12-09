@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  my_redis:
+    image: 'redis'
+    container_name: 'my_redis'
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./:/app
+networks:
+  default:
+    external: true
+    name: ocr-network

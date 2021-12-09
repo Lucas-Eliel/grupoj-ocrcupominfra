@@ -1,0 +1,37 @@
+{
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "cod_idef_ocr",
+      "AttributeType": "S"
+    }
+  ],
+  "TableName": "ocr-cupom",
+  "KeySchema": [
+    {
+      "AttributeName": "cod_idef_ocr",
+      "KeyType": "HASH"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 1,
+    "WriteCapacityUnits": 1
+  },
+  "GlobalSecondaryIndexes": [
+    {
+      "IndexName": "idef",
+      "KeySchema": [
+        {
+          "AttributeName": "cod_idef_ocr",
+          "KeyType": "HASH"
+        }
+      ],
+      "Projection": {
+        "ProjectionType": "ALL"
+      },
+      "ProvisionedThroughput": {
+        "ReadCapacityUnits": 1,
+        "WriteCapacityUnits": 1
+      }
+    }
+  ]
+}

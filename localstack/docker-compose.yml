@@ -1,0 +1,32 @@
+version: "3.7"
+
+services:
+  localstack:
+    container_name: "localstack"
+    image: localstack/localstack:latest
+    hostname: localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,lambda,apigateway
+      - DEFAULT_REGION=sa-east-1
+      - AWS_ACCESS_KEY_ID=admin
+      - AWS_SECRET_ACCESS_KEY=admin
+      - DEBUG=1
+      - DATA_DIR=/tmp/localstack/data
+      - LAMBDA_EXECUTOR=local
+      - LAMBDA_REMOTE_DOCKER=false
+      - LAMBDA_REMOVE_CONTAINERS=true
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOST_TMP_FOLDER=/tmp/localstack
+    volumes:
+      - ./data:/tmp/localstack
+      - ./bin:/docker-entrypoint-initaws.d
+      - /Users/lucaseliel/Documents/projects/grupoj-ocrcupomcommand:/lambda_folder_ocrcupomcommand
+      - /Users/lucaseliel/Documents/projects/grupoj-ocrcupomquery:/lambda_folder_ocrcupomquery
+      - ./output:/output
+
+networks:
+  default:
+    external: true
+    name: ocr-network

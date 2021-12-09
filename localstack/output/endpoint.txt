@@ -1,0 +1,1 @@
+http://localhost:4566/restapis/88gi3b4o3m/test/_user_request_/processamento-ocr-cupom
