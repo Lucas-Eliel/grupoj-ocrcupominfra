@@ -1,27 +1,31 @@
 {
-  "AttributeDefinitions": [
-    {
-      "AttributeName": "cod_idef_ocr",
-      "AttributeType": "S"
-    }
-  ],
   "TableName": "ocr-cupom",
   "KeySchema": [
     {
-      "AttributeName": "cod_idef_ocr",
+      "AttributeName": "status",
       "KeyType": "HASH"
+    },
+    {
+      "AttributeName": "id",
+      "KeyType": "RANGE"
     }
   ],
-  "ProvisionedThroughput": {
-    "ReadCapacityUnits": 1,
-    "WriteCapacityUnits": 1
-  },
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "status",
+      "AttributeType": "S"
+    },
+    {
+      "AttributeName": "id",
+      "AttributeType": "S"
+    }
+  ],
   "GlobalSecondaryIndexes": [
     {
-      "IndexName": "idef",
+      "IndexName": "index-status",
       "KeySchema": [
         {
-          "AttributeName": "cod_idef_ocr",
+          "AttributeName": "status",
           "KeyType": "HASH"
         }
       ],
@@ -33,5 +37,9 @@
         "WriteCapacityUnits": 1
       }
     }
-  ]
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 1,
+    "WriteCapacityUnits": 1
+  }
 }
