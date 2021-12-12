@@ -2,21 +2,21 @@
   "TableName": "ocr-cupom",
   "KeySchema": [
     {
-      "AttributeName": "status",
+      "AttributeName": "status_cupom",
       "KeyType": "HASH"
     },
     {
-      "AttributeName": "id",
+      "AttributeName": "id_processo",
       "KeyType": "RANGE"
     }
   ],
   "AttributeDefinitions": [
     {
-      "AttributeName": "status",
+      "AttributeName": "status_cupom",
       "AttributeType": "S"
     },
     {
-      "AttributeName": "id",
+      "AttributeName": "id_processo",
       "AttributeType": "S"
     }
   ],
@@ -25,7 +25,7 @@
       "IndexName": "index-status",
       "KeySchema": [
         {
-          "AttributeName": "status",
+          "AttributeName": "status_cupom",
           "KeyType": "HASH"
         }
       ],

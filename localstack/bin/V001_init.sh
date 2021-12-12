@@ -59,14 +59,28 @@ awslocal apigateway create-resource \
     --parent-id ${PARENT_RESOURCE_ID} \
     --path-part "processamento-ocr-cupom"
 
+awslocal apigateway create-resource \
+    --rest-api-id ${API_ID} \
+    --parent-id ${PARENT_RESOURCE_ID} \
+    --path-part "cupons-validos"
+
+awslocal apigateway create-resource \
+    --rest-api-id ${API_ID} \
+    --parent-id ${PARENT_RESOURCE_ID} \
+    --path-part "cupons-invalidos"
+
+echo -----------------------------------------------------------------------------------------------
+echo ---------------------Criando recurso do grupoj-ocrcupomcommand API Gateway---------------------
+echo -----------------------------------------------------------------------------------------------
+
 [ $? == 0 ] || fail 3 "Failed: AWS / apigateway / create-resource"
 
-RESOURCE_ID=$(awslocal apigateway get-resources --rest-api-id ${API_ID} --query 'items[?path==`/processamento-ocr-cupom`].id' --output text)
-echo RESOURCE_ID ${RESOURCE_ID}
+RESOURCE_ID_OCR_CUPOM_COMMAND=$(awslocal apigateway get-resources --rest-api-id ${API_ID} --query 'items[?path==`/processamento-ocr-cupom`].id' --output text)
+echo RESOURCE_ID_OCR_CUPOM_COMMAND ${RESOURCE_ID_OCR_CUPOM_COMMAND}
 
 awslocal apigateway put-method \
     --rest-api-id ${API_ID} \
-    --resource-id ${RESOURCE_ID} \
+    --resource-id ${RESOURCE_ID_OCR_CUPOM_COMMAND} \
     --http-method POST \
     --authorization-type "NONE" \
 
@@ -74,18 +88,25 @@ awslocal apigateway put-method \
 
 awslocal apigateway put-integration \
     --rest-api-id ${API_ID} \
-    --resource-id ${RESOURCE_ID} \
+    --resource-id ${RESOURCE_ID_OCR_CUPOM_COMMAND} \
     --http-method POST \
     --type AWS_PROXY \
     --integration-http-method POST \
     --uri arn:aws:apigateway:sa-east-1:lambda:path/2015-03-31/functions/${LAMBDA_OCR_CUPOM_COMMAND_ARN}/invocations \
     --passthrough-behavior WHEN_NO_MATCH \
 
+echo -----------------------------------------------------------------------------------------------
+echo ---------------------Criando recurso do grupoj-ocrcupomquery API Gateway-----------------------
+echo -----------------------------------------------------------------------------------------------
+
+RESOURCE_ID_OCR_CUPOM_QUERY_1=$(awslocal apigateway get-resources --rest-api-id ${API_ID} --query 'items[?path==`/cupons-validos`].id' --output text)
+echo RESOURCE_ID_OCR_CUPOM_QUERY_1 ${RESOURCE_ID_OCR_CUPOM_QUERY_1}
+
 [ $? == 0 ] || fail 5 "Failed: AWS / apigateway / put-integration"
 
 awslocal apigateway put-method \
     --rest-api-id ${API_ID} \
-    --resource-id ${RESOURCE_ID} \
+    --resource-id ${RESOURCE_ID_OCR_CUPOM_QUERY_1} \
     --http-method GET \
     --authorization-type "NONE" \
 
@@ -93,7 +114,30 @@ awslocal apigateway put-method \
 
 awslocal apigateway put-integration \
     --rest-api-id ${API_ID} \
-    --resource-id ${RESOURCE_ID} \
+    --resource-id ${RESOURCE_ID_OCR_CUPOM_QUERY_1} \
+    --http-method GET \
+    --type AWS_PROXY \
+    --integration-http-method POST \
+    --uri arn:aws:apigateway:sa-east-1:lambda:path/2015-03-31/functions/${LAMBDA_OCR_CUPOM_QUERY_ARN}/invocations \
+    --passthrough-behavior WHEN_NO_MATCH \
+
+
+RESOURCE_ID_OCR_CUPOM_QUERY_2=$(awslocal apigateway get-resources --rest-api-id ${API_ID} --query 'items[?path==`/cupons-invalidos`].id' --output text)
+echo RESOURCE_ID_OCR_CUPOM_QUERY_2 ${RESOURCE_ID_OCR_CUPOM_QUERY_2}
+
+[ $? == 0 ] || fail 5 "Failed: AWS / apigateway / put-integration"
+
+awslocal apigateway put-method \
+    --rest-api-id ${API_ID} \
+    --resource-id ${RESOURCE_ID_OCR_CUPOM_QUERY_2} \
+    --http-method GET \
+    --authorization-type "NONE" \
+
+[ $? == 0 ] || fail 6 "Failed: AWS / apigateway / put-method"
+
+awslocal apigateway put-integration \
+    --rest-api-id ${API_ID} \
+    --resource-id ${RESOURCE_ID_OCR_CUPOM_QUERY_2} \
     --http-method GET \
     --type AWS_PROXY \
     --integration-http-method POST \
