@@ -1,4 +1,4 @@
-# OCR CUPOM QUERY
+# OCR CUPOM INFRA
 
 Micro serviço responsável por criar o ambiente da aws localmente em sua máquina preparando o ambiente para:
 
