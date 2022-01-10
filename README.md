@@ -5,7 +5,7 @@ Micro serviço responsável por criar o ambiente da aws localmente em sua máqui
 #### https://github.com/Lucas-Eliel/grupoj-ocrcupomcommand
 #### https://github.com/Lucas-Eliel/grupoj-ocrcupomquery
 
-## Arquitetura
+## Localização na arquitetura
 
 ![](Arquitetura%20OCR%20Cupom.drawio.png)
 
